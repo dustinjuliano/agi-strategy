@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction</title>
+    <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+
+      if (initialTheme === 'dark') {
+        document.documentElement.classList.add('dark-theme');
+      }
+    })();
+  </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../base.css">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>AGI Strategy</h1>
+        <nav>
+          <a class="nav-link" href="../">Home</a>
+          <a class="nav-link" href="../preface/">Preface</a>
+          <a class="nav-link" href="../introduction/">Introduction</a>
+          <div class="theme-switch-container">
+            <button class="theme-toggler" id="theme-toggler">
+              <span class="ball"></span>
+            </button>
+            <span class="theme-icon-label">☀</span>
+          </div>
+        </nav>
+      </header>
+      <main>
+        <p>Introduction to the book.</p>
+      </main>
+      <footer>
+        <hr>
+        <p>© 2026 AGI Strategy.</p>
+      </footer>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeToggler = document.getElementById('theme-toggler');
+      const docElement = document.documentElement;
+
+      const applyTheme = (theme) => {
+        if (theme === 'dark') {
+          docElement.classList.add('dark-theme');
+        } else {
+          docElement.classList.remove('dark-theme');
+        }
+      };
+
+      if (themeToggler) {
+        themeToggler.addEventListener('click', () => {
+          const currentTheme = docElement.classList.contains('dark-theme') ? 'dark' : 'light';
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+          localStorage.setItem('theme', newTheme);
+          applyTheme(newTheme);
+        });
+      }
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) {
+          applyTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    });
+  </script>
+  </body>
+</html>
